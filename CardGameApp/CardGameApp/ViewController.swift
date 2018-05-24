@@ -247,7 +247,10 @@ extension ViewController {
             originalInfo = frameCalculator.originalLocation(view: superView, position: cardView.frame.origin)
             guard let movables = originalInfo.getView().cardImages(at: originalInfo.getIndex()) else { return }
             movableViews = movables
+            self.view.bringSubview(toFront: superView)
+
         case .changed:
+            self.view.bringSubview(toFront: superView)
             movableViews.forEach{
                 $0.layer.zPosition = 1
                 $0.frame.origin = CGPoint(x: $0.frame.origin.x + translation.x,
