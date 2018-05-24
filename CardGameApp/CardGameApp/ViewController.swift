@@ -75,7 +75,8 @@ class ViewController: UIViewController {
 
     @objc func updateOpenDeck(notification: Notification) {
         guard notification.object as! Bool else {
-            self.deckView.loadRefreshIcon()
+            self.cardGameDelegate.shuffleDeck()
+            self.deckView.reset()
             return
         }
         self.deckView.setOpenDeck()
@@ -107,7 +108,7 @@ class ViewController: UIViewController {
         if motion == .motionShake {
             self.cardGameDelegate.shuffleDeck()
         } // 모델 변경
-        self.deckView.resetByShake()
+        self.deckView.reset()
     }
 
     // MARK: Animation Related

@@ -70,6 +70,14 @@ class CardDeckView: UIView, Movable {
         guard let card = deckManager.lastOpenedCard() else { return }
         pickedCardView.getImage(of: card)
         addSubview(pickedCardView)
+        
+        if deckManager.hasEnoughCard() {
+            closedCardDeck.getDeckImage()
+            addSubview(closedCardDeck)
+        } else {
+            closedCardDeck.getRefreshImage()
+            addSubview(closedCardDeck)
+        }
     }
 
     func loadRefreshIcon() {
@@ -100,7 +108,7 @@ class CardDeckView: UIView, Movable {
         return closedCardDeck
     }
 
-    func resetByShake() {
+    func reset() {
         self.subviews.forEach{ $0.removeFromSuperview() }
         setup()
     }
