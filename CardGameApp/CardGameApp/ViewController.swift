@@ -295,6 +295,9 @@ extension ViewController {
 
     // model업데이트 후에 해당하는 뷰 reload
     private func reloadViews() {
+        guard originalInfo != nil else { return }
+        guard toInfo != nil else { return }
+
         let from = self.originalInfo.getView().convertViewKey()
         let to = self.toInfo.getView().convertViewKey()
 
