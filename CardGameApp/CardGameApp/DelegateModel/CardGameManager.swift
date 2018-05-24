@@ -82,7 +82,6 @@ class CardGameManager: CardGameDelegate {
     }
 
     func popStack(column: Int) {
-        //let activatedCard = stackManagers.lastCard(of: column)
         stackManagers.removePoppedCard(of: column)
     }
 

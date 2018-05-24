@@ -68,16 +68,12 @@ class CardDeckView: UIView, Movable {
         self.setDoubleTabToCard(to: pickedCardView)
 
         guard let card = deckManager.lastOpenedCard() else { return }
-        pickedCardView.getImage(of: card)
-        addSubview(pickedCardView)
-        
-        if deckManager.hasEnoughCard() {
-            closedCardDeck.getDeckImage()
-            addSubview(closedCardDeck)
-        } else {
+        if !deckManager.hasEnoughCard() {
             closedCardDeck.getRefreshImage()
             addSubview(closedCardDeck)
         }
+        pickedCardView.getImage(of: card)
+        addSubview(pickedCardView)
     }
 
     func loadRefreshIcon() {
