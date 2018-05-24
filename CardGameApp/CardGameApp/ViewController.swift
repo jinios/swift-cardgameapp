@@ -106,9 +106,12 @@ class ViewController: UIViewController {
 
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            self.cardGameDelegate.shuffleDeck()
-        } // 모델 변경
-        self.deckView.reset()
+            self.view.subviews.forEach{ $0.removeFromSuperview() }
+            NotificationCenter.default.post(name: .deviceShaked, object: nil)
+        }
+        self.setDeckView()
+        self.setFoundationView()
+        self.setStacksView()
     }
 
     // MARK: Animation Related

@@ -18,6 +18,7 @@ extension Notification.Name {
     static let doubleTappedStack = Notification.Name("doubleTappedStack")
     static let doubleTappedOpenedDeck = Notification.Name("doubleTappedOpenedDeck")
     static let cardDragged = Notification.Name("cardDragged")
+    static let deviceShaked = Notification.Name("deviceShaked")
 }
 
 extension UIView {
