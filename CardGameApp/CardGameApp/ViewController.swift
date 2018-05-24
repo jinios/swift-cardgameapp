@@ -109,8 +109,8 @@ class ViewController: UIViewController {
             self.view.subviews.forEach{ $0.removeFromSuperview() }
             NotificationCenter.default.post(name: .deviceShaked, object: nil)
         }
-        self.setDeckView()
         self.setFoundationView()
+        self.setDeckView()
         self.setStacksView()
     }
 
