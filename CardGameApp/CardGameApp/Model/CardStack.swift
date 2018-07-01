@@ -76,6 +76,13 @@ struct CardStack {
     }
 
     func arrangeStack() {
+        var countOfOpenCards = 0
+        cards.reversed().forEach{ card in
+            if card.side == .front {
+                countOfOpenCards += 1
+            }
+        }
+        guard countOfOpenCards < 1 else { return }
         let lastIndex = self.cards.count - 1
         for i in 0..<self.cards.count {
             let cardInTurn = self.cards[i]
