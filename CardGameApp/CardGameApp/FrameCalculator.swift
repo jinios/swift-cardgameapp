@@ -36,8 +36,8 @@ class FrameCalculator {
             guard let index = info.index else {break}
             return CGPoint(x: PositionX.allValues[column].value,
                            y: PositionY.bottom.value + CGFloat(15 * index))
-        default: return CGPoint(x: 0.0, y: 0.0)
-        }
+        default: return CGPoint(x: PositionX.sixth.value, y: PositionY.upper.value)
+        }  // deck의 opencard위치로 돌아가는 경우
         return CGPoint(x: 0.0, y: 0.0)
     }
 
