@@ -276,7 +276,7 @@ extension ViewController {
         }
     }
 
-    // 현재 currentFrame이 위치한 뷰에 맞는 MoveInfo 생성
+    // 현재 currentFrame이 위치한 뷰에 맞는 MoveInfo 생성 - 애니메이션을 위해
     private func toInfo(at point: CGPoint) -> MoveInfo? {
         guard let to = frameCalculator.toInfo(at: point) else {return nil}
 
@@ -285,7 +285,7 @@ extension ViewController {
             return MoveInfo(view: foundationView as Movable, column: to.column!, index: nil)
         case .stack:
             guard let toColumn = to.column else { return nil }
-            let toIndex = stackView.lastCardPosition(column: toColumn)
+            let toIndex = stackView.lastCardPosition(column: toColumn) + (movableViews.count - 1)
             return MoveInfo(view: stackView.getOneStack(of: toColumn), column: toColumn, index: toIndex)
         default: break
         }
