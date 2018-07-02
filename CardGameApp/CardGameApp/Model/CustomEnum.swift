@@ -66,3 +66,26 @@ enum Key {
     case FromView
     case GestureRecognizer
 }
+
+enum FinishAlert: CustomStringConvertible {
+    case GameSuccess
+    case SuccessAlertMessage
+    case YAY
+    case DefaultAction
+    case AlertLog
+
+    var description: String {
+        switch self {
+        case .GameSuccess:
+            return "Game Success"
+        case .SuccessAlertMessage:
+            return "Congratulations!🎉\nTap 'YAY' to restart a game!"
+        case .YAY:
+            return "YAY!🤩"
+        case .DefaultAction:
+            return "Default action"
+        case .AlertLog:
+            return "User tapped \"YAY!\"button."
+        }
+    }
+}

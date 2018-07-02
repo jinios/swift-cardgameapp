@@ -106,12 +106,8 @@ class ViewController: UIViewController {
 
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            self.view.subviews.forEach{ $0.removeFromSuperview() }
-            NotificationCenter.default.post(name: .deviceShaked, object: nil)
+            self.restartGame()
         }
-        self.setFoundationView()
-        self.setDeckView()
-        self.setStacksView()
     }
 
     // MARK: Animation Related
@@ -290,7 +286,7 @@ extension ViewController {
 
     // 현재 currentFrame이 위치한 뷰에 맞는 MoveInfo 생성 - 애니메이션을 위해
     private func toInfo(at point: CGPoint) -> MoveInfo? {
-        guard let to = frameCalculator.toInfo(at: point) else {return nil}
+        guard let to = frameCalculator.toInfo(at: point) else { return originalInfo }
 
         switch to.view {
         case .foundation:
@@ -299,10 +295,11 @@ extension ViewController {
             guard let toColumn = to.column else { return nil }
             let toIndex = stackView.lastCardPosition(column: toColumn) + (movableViews.count - 1)
             return MoveInfo(view: stackView.getOneStack(of: toColumn), column: toColumn, index: toIndex)
-        default: break
+        case .deck:
+            return originalInfo
+        default:
+            return originalInfo
         }
-
-        return nil
     }
 
     // model업데이트 후에 해당하는 뷰 reload
@@ -343,8 +340,31 @@ extension ViewController {
             completion: { _ in
                 self.reloadViews()
                 self.movableViews.forEach{ $0.removeFromSuperview() }
+                self.gameFinishAlert()
         })
     }
 
-}
+    private func gameFinishAlert() {
+        guard cardGameDelegate.checkFinish() else { return }
+        let alert = UIAlertController(title: FinishAlert.GameSuccess.description,
+                                      message: FinishAlert.SuccessAlertMessage.description,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString(FinishAlert.YAY.description,
+                                                               comment: FinishAlert.DefaultAction.description),
+                                      style: .default,
+                                      handler: { _ in
+                                        print(FinishAlert.AlertLog)
+                                        self.restartGame()
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
 
+    private func restartGame() {
+        NotificationCenter.default.post(name: .deviceShaked, object: nil)
+        self.view.subviews.forEach{ $0.removeFromSuperview() }
+        self.setFoundationView()
+        self.setDeckView()
+        self.setStacksView()
+    }
+
+}
