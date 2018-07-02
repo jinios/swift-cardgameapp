@@ -145,6 +145,7 @@ class ViewController: UIViewController {
         UIView.animate(
             withDuration: 1.0, delay: 0, options: UIViewAnimationOptions.curveEaseOut,
             animations: {
+                self.view.bringSubview(toFront: self.deckView)
                 targetCard.layer.zPosition = 1
                 targetCard.frame.origin.x += moveTo.x
                 targetCard.frame.origin.y += moveTo.y
@@ -162,36 +163,37 @@ class ViewController: UIViewController {
         guard let userInfo = notification.userInfo else { return }
         guard let from = userInfo[Key.FromView] else { return }
         guard let fromView = from as? OneStack else { return }
-        let fromIndex = fromView.getColumn()
+        let fromColumn = fromView.getColumn()
         let targetCard = fromView.lastCardView!
 
-        let result = cardGameDelegate.movableFromStack(from: .fromStack, column: fromIndex)
+        let result = cardGameDelegate.movableFromStack(from: .fromStack, column: fromColumn)
         let toView = result.to
-        guard let toIndex = result.index else { return }
+        guard let toColumn = result.index else { return }
 
-        let fromFrame = calculateFrame(view: .fromStack, index: fromIndex)
-        let toFrame = calculateFrame(view: toView, index: toIndex)
+        let fromFrame = calculateFrame(view: .fromStack, index: fromColumn)
+        let toFrame = calculateFrame(view: toView, index: toColumn)
 
         let moveTo = (x: toFrame.x - fromFrame.x,
                       y: toFrame.y - fromFrame.y)
 
-        let popCard = cardGameDelegate.getWholeStackDelegate().getStackDelegate(of: fromIndex).currentLastCard()
-        cardGameDelegate.getWholeStackDelegate().getStackDelegate(of: fromIndex).removePoppedCard() //stack의 마지막카드제거
+        let popCard = cardGameDelegate.getWholeStackDelegate().getStackDelegate(of: fromColumn).currentLastCard()
+        cardGameDelegate.getWholeStackDelegate().getStackDelegate(of: fromColumn).removePoppedCard() //stack의 마지막카드제거
 
         if toView == .foundation {
             let foundationManager: Stackable = cardGameDelegate.getFoundationDelegate() as Stackable
-            foundationManager.stackOne(card: popCard, column: toIndex)
+            foundationManager.stackOne(card: popCard, column: toColumn)
         }
 
         if toView == .stack {
             let stacksManger: Stackable = cardGameDelegate.getWholeStackDelegate() as Stackable
-            stacksManger.stackOne(card: popCard, column: toIndex)
+            stacksManger.stackOne(card: popCard, column: toColumn)
         }
-
 
         UIView.animate(
             withDuration: 1.0, delay: 0, options: UIViewAnimationOptions.curveEaseOut,
             animations: {
+                self.view.bringSubview(toFront: self.stackView)
+                self.stackView.bringSubviewtoFront(column: fromColumn)
                 targetCard.layer.zPosition = 1
                 targetCard.frame.origin.x += moveTo.x
                 targetCard.frame.origin.y += moveTo.y
@@ -200,8 +202,8 @@ class ViewController: UIViewController {
                 targetCard.removeFromSuperview()
                 self.foundationView.reload()
                 self.deckView.reload()
-                self.stackView.reload(column: fromIndex)
-                self.stackView.reload(column: toIndex)
+                self.stackView.reload(column: fromColumn)
+                self.stackView.reload(column: toColumn)
         })
     }
 
@@ -251,10 +253,9 @@ extension ViewController {
             originalInfo = frameCalculator.originalLocation(view: superView, position: cardView.frame.origin)
             guard let movables = originalInfo.getView().cardImages(at: originalInfo.getIndex()) else { return }
             movableViews = movables
-            self.view.bringSubview(toFront: superView)
-
+            self.bringSubviewToFront(subview: originalInfo)
         case .changed:
-            self.view.bringSubview(toFront: superView)
+            self.bringSubviewToFront(subview: originalInfo)
             movableViews.forEach{
                 $0.layer.zPosition = 1
                 $0.frame.origin = CGPoint(x: $0.frame.origin.x + translation.x,
@@ -272,6 +273,17 @@ extension ViewController {
             }
             animateCards(to: frameCalculator.availableFrame(of: toInfo))
         case .cancelled: animateCards(to: frameCalculator.availableFrame(of: originalInfo))
+        default: return
+        }
+    }
+
+    private func bringSubviewToFront(subview: MoveInfo) {
+        switch subview.getView() {
+        case _ as OneStack:
+            self.view.bringSubview(toFront: self.stackView)
+            self.stackView.bringSubviewtoFront(column: subview.getColumn()!)
+        case _ as CardDeckView:
+            self.view.bringSubview(toFront: self.deckView)
         default: return
         }
     }
@@ -321,6 +333,7 @@ extension ViewController {
         UIView.animate(
             withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut,
             animations: {
+                self.bringSubviewToFront(subview: self.originalInfo)
                 self.movableViews.forEach {
                     $0.layer.zPosition = 1
                     $0.frame.origin.x += moveTo.x

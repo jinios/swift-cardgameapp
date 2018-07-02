@@ -9,6 +9,7 @@
 import UIKit
 
 class CardStacksView: UIView {
+
     static let numberOfStacks: Int = 7
     private var wholeStackManager: (CardStackDelegate & Stackable)!
     private var oneStackViews = [OneStack]()
@@ -54,6 +55,10 @@ class CardStacksView: UIView {
 
     func lastCardPosition(column: Int) -> Int{
         return self.oneStackViews[column].lastCardPosition()
+    }
+
+    func bringSubviewtoFront(column: Int) {
+        self.bringSubview(toFront: oneStackViews[column])
     }
 
 }
