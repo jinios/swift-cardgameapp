@@ -30,6 +30,7 @@ protocol CardGameDelegate {
     func ruleCheck(fromInfo: MoveInfo, toInfo: MoveInfo?) -> Bool
     func movableCards(info: MoveInfo) -> [Card]?
     func isStackAble(cards: [Card], to toInfo: MoveInfo) -> Bool
+    func checkFinish() -> Bool
 }
 
 protocol CardDeckDelegate {
@@ -38,18 +39,21 @@ protocol CardDeckDelegate {
     func shuffleDeck()
     func removePoppedCard()
     func pop()
+    func checkFinish() -> Bool
 }
 
 protocol CardStackDelegate {
     func lastCard(of column: Int) -> Card
     func removePoppedCard(of column: Int)
     func getStackDelegate(of column: Int) -> StackDelegate
+    func checkFinish() -> Bool
 }
 
 protocol FoundationDelegate {
     func cardInTurn(at:(column: Int, row: Int)) -> Card
     func countOfCards(of: Int) -> Int
     func cards(in column: Int) -> [Card]
+    func checkFinish() -> Bool
 }
 
 protocol StackDelegate {
@@ -62,6 +66,7 @@ protocol StackDelegate {
     func stackUp(newCards: [Card])
     func movableCards(from: Int) -> [Card]
     func removeCards(from index: Int)
+    func checkFinish() -> Bool
 }
 
 // MARK: RuleCheck - Double Tap, Drag Action Related

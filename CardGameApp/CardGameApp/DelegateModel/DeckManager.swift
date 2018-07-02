@@ -9,6 +9,7 @@
 import Foundation
 
 class DeckManager: CardDeckDelegate {
+
     private var deck: CardDeck!
     private var openedDeck = [Card]()
 
@@ -46,6 +47,10 @@ class DeckManager: CardDeckDelegate {
         openedDeck.forEach{ $0.turnOver() } // openedDeck안의 카드 상태를 전부 다시 closed로 만들어줌
         deck.shuffleDeck(with: openedDeck)
         openedDeck = [Card]()
+    }
+
+    func checkFinish() -> Bool {
+        return self.deck.count() + openedDeck.count == 0
     }
 
 }

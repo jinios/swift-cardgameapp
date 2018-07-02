@@ -15,6 +15,9 @@ class StackManager: StackDelegate {
     private var lastCard: Card? {
         return self.stack.last()
     }
+    var counts: Int {
+        return stack.count()
+    }
 
     init(oneStack: CardStack, column: Int) {
         self.stack = oneStack
@@ -73,5 +76,10 @@ class StackManager: StackDelegate {
             removePoppedCard()
         }
     }
+
+    func checkFinish() -> Bool {
+        return self.counts == 0
+    }
+
 }
 

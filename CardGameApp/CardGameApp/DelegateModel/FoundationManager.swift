@@ -57,4 +57,8 @@ class FoundationManager: FoundationDelegate, Stackable {
         return self.foundations[column].getCards()
     }
 
+    func checkFinish() -> Bool {
+        return (foundations.filter{ $0.count() == 13 }.count == 4)
+    }
+
 }

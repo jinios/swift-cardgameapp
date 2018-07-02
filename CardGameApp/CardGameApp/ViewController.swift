@@ -151,6 +151,7 @@ class ViewController: UIViewController {
                 self.foundationView.reload()
                 self.deckView.reload()
                 self.stackView.reload(column: toIndex)
+                self.gameFinishAlert()
         })
 
     }
@@ -200,6 +201,7 @@ class ViewController: UIViewController {
                 self.deckView.reload()
                 self.stackView.reload(column: fromColumn)
                 self.stackView.reload(column: toColumn)
+                self.gameFinishAlert()
         })
     }
 

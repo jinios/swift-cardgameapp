@@ -9,7 +9,7 @@
 import Foundation
 
 class WholeStackManager: CardStackDelegate, Stackable, Draggable {
-
+    
     private var stackManagers: [StackDelegate]!
 
     init(stacks: [CardStack]) {
@@ -46,6 +46,15 @@ class WholeStackManager: CardStackDelegate, Stackable, Draggable {
 
     func stackUp(cards: [Card], column: Int) {
         stackManagers[column].stackUp(newCards: cards)
+    }
+
+    func checkFinish() -> Bool {
+        var result = 0
+        for stack in stackManagers {
+            guard stack.checkFinish() else { continue }
+            result += 1
+        }
+        return result == 7
     }
 
 }

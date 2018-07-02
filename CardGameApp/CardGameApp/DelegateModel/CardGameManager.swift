@@ -91,8 +91,8 @@ class CardGameManager: CardGameDelegate {
         if let tofoundationIndex = foundationManager.stackable(nextCard: card) {
             return (to: .foundation, index: tofoundationIndex)
         }
-        else if let toStackIndex = stackManagers.stackable(nextCard: card) {
-            return (to: .stack, index: toStackIndex)
+        else if let toStackColumn = stackManagers.stackable(nextCard: card) {
+            return (to: .stack, index: toStackColumn)
         } else {
             return (to: .deck, index: nil)
         }
@@ -172,6 +172,9 @@ class CardGameManager: CardGameDelegate {
         }
     }
 
+    func checkFinish() -> Bool {
+        return deckManager.checkFinish() && foundationManager.checkFinish() && stackManagers.checkFinish()
+    }
 
 }
 
