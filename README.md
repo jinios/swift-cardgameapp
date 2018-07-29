@@ -1,3 +1,8 @@
+## 완성화면
+> 게임 성공 화면 예시
+<img src="./Screenshot/cardgame_finish.gif" width="50%">
+
+
 ## Step1
 - 구현화면 : 2018.04.12
 <img src="./Screenshot/step1-1.png" width="50%">
