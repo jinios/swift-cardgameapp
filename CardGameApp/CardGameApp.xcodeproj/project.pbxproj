@@ -24,7 +24,6 @@
 		FDDD33C62085EFCF000E9D0E /* CustomEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDD33C52085EFCF000E9D0E /* CustomEnum.swift */; };
 		FDDFB92A2080472500920FB4 /* card_decks in Resources */ = {isa = PBXBuildFile; fileRef = FDDFB9292080472500920FB4 /* card_decks */; };
 		FDDFB93A2080498800920FB4 /* CardStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFB9332080498700920FB4 /* CardStack.swift */; };
-		FDDFB93B2080498800920FB4 /* EnumCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFB9342080498700920FB4 /* EnumCollection.swift */; };
 		FDDFB93C2080498800920FB4 /* CardDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFB9352080498700920FB4 /* CardDeck.swift */; };
 		FDDFB93D2080498800920FB4 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDFB9362080498700920FB4 /* Card.swift */; };
 		FDF8BBB0209AF89C00AA0C82 /* CustomProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF8BBAF209AF89C00AA0C82 /* CustomProtocols.swift */; };
@@ -52,7 +51,6 @@
 		FDDD33C52085EFCF000E9D0E /* CustomEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEnum.swift; sourceTree = "<group>"; };
 		FDDFB9292080472500920FB4 /* card_decks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = card_decks; sourceTree = "<group>"; };
 		FDDFB9332080498700920FB4 /* CardStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStack.swift; sourceTree = "<group>"; };
-		FDDFB9342080498700920FB4 /* EnumCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumCollection.swift; sourceTree = "<group>"; };
 		FDDFB9352080498700920FB4 /* CardDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDeck.swift; sourceTree = "<group>"; };
 		FDDFB9362080498700920FB4 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		FDF8BBAF209AF89C00AA0C82 /* CustomProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProtocols.swift; sourceTree = "<group>"; };
@@ -136,7 +134,6 @@
 				FDF8BBAF209AF89C00AA0C82 /* CustomProtocols.swift */,
 				FDDFB9352080498700920FB4 /* CardDeck.swift */,
 				FDDFB9332080498700920FB4 /* CardStack.swift */,
-				FDDFB9342080498700920FB4 /* EnumCollection.swift */,
 				FDDFB9362080498700920FB4 /* Card.swift */,
 			);
 			path = Model;
@@ -231,7 +228,6 @@
 				FDD8FA16207F035400F5FD99 /* AppDelegate.swift in Sources */,
 				FDC1ACB0208F23F000A39C47 /* CardDeckView.swift in Sources */,
 				FDF8BBB2209AFA2A00AA0C82 /* StackManager.swift in Sources */,
-				FDDFB93B2080498800920FB4 /* EnumCollection.swift in Sources */,
 				FDDFB93A2080498800920FB4 /* CardStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

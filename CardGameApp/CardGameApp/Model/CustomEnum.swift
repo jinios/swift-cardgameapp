@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum PositionX: EnumCollection {
+enum PositionX {
     case first
     case second
     case third
@@ -29,6 +29,8 @@ enum PositionX: EnumCollection {
         case .seventh: return 355.78125
         }
     }
+
+    static var allValues: [PositionX] = [.first, .second, .third, .fourth, .fifth, .sixth, .seventh]
 
 }
 

@@ -86,7 +86,7 @@ class CardDeck {
 
 extension CardDeck {
     
-    enum Suit: String, EnumCollection, Comparable, CustomStringConvertible {
+    enum Suit: String, Comparable, CustomStringConvertible {
         case heart = "♥️"
         case diamond = "♦️"
         case clover = "♣️"
@@ -107,9 +107,11 @@ extension CardDeck {
             return lhs.hashValue == rhs.hashValue
         }
 
+        static var allValues: [Suit] = [.heart, .diamond, .clover, .spade]
+
     }
     
-    enum Denomination: Int, CustomStringConvertible, EnumCollection, Comparable {
+    enum Denomination: Int, CustomStringConvertible, Comparable {
         case ace = 1, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen
         
         var description: String {
@@ -137,6 +139,8 @@ extension CardDeck {
         func isDescending(next: CardDeck.Denomination) -> Bool {
             return self.rawValue == (next.rawValue - 1)
         }
+
+        static var allValues: [Denomination] = [.ace, .two, .three, .four, .five, .six, .seven, .eight, .nine, .ten, .eleven, .twelve, .thirteen]
     }
    
 }
