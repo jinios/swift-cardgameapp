@@ -1,45 +1,51 @@
 ## 완성화면
-> 게임 성공 화면 예시
-<img src="./Screenshot/cardgame_finish.gif" width="50%">
+
+- 게임 성공 화면
+- <img src="./Screenshot/cardgame_finish.gif" width="50%">
 
 
-## Step1
-- 구현화면 : 2018.04.12
-<img src="./Screenshot/step1-1.png" width="50%">
+## 주요 기능
+- [솔리테어 카드게임](https://ko.wikipedia.org/wiki/클론다이크)을 구현한다.
+- 더블탭과 드래그로 카드를 옮길 수 있다.
+- 디바이스를 흔들면 (Shake Gesture)게임이 새로 시작된다.
+- 게임을 완료하면 안내메시지를 표시한다.
+
+## 사용한 기술
+- Custom View, Gesture Recognizer, View Animation, UIAlertController,
+
+## 설계
+> ViewModel 활용: 기존의 MVC를 유지하되, View를 Passive하게 만들고 View Model담당 객체를 추가
+
+- 이 프로젝트에서 가장 깊이 경험했던 부분은 복잡한 뷰 계층구조에서 발생하는 이벤트 감지와 처리를 위해 최대한 효과적으로 로직을 분리하는 것이었습니다.
+- 따라서 복잡한 계층 구조를 가진 객체의 역할을 분리하고, 최대한 Passive한 View를 만들어서 View Model만으로도 게임 로직이 성립되도록 구현했습니다.
+- 또한 이벤트 수신과 처리에 대한 결과를 반영하기위한 View update flow의 단방향성에 신경써서 작업하였습니다.
+
+## 주요 객체 역할분담
+- 카드의 위치에 따라 Foundation, CardDeck, CardStack으로 객체 역할 구분
+- 카드게임 전체를 관할하는 CardGameManager 클래스를 Singleton객체로 설계하여 하나의 앱 당 하나의 CardGameManager만 존재하도록 구현하고, 게임이 재시작됐을때 새롭게 초기화된 게임매니저 객체를 할당
+
+#### Model
+- CardGameManager: 카드게임 전체를 관할하는 모든 모델들의 최상위모델
+- Card: 카드한장을 나타내는 객체
+- CardDeck: 52장의 카드를 모아두는 카드덱
+- CardStack: 필드에 놓여진 카드 스택 하나
+#### View - ViewModel
+- DeckManager - CardDeckView: CardDeck에 있는 카드뷰들을 담당
+- WholeStackManager - CardStacksView: 전체 CardStack 7개를 담당
+- StackManager - OneStack: CardStack 1개를 담당
+- FoundationManager - FoundationView: Foundation 담당 (카드가 순서대로 맞춰져서 쌓이는 곳)
+#### Others
+- FrameCalculator: 각 서브뷰에서 수신되는 이벤트(DoubleTap, PanGesture)에 따른 카드뷰들의 위치를 계산하는 객체
+- (카드게임앱은 하나의 루트뷰를 Deck, Foundation, Stack의 세 영역으로 나누고 프레임을 계산해서 서브뷰를 띄운 방식으로 구현함. 따라서 ViewController가 제스처를 수신하고 이벤트를 처리할때 복잡한 프레임 계산을 담당하는 객체가 필요했음.)
 
 
-### Status Bar Style
-- 화면 상단 상태 바의 UI요소들의 색을 변경할 수 있다.
-- ViewController에 아래의 코드를 넣어서 설정할 수 있다.
- ```swift
- override var preferredStatusBarStyle: UIStatusBarStyle {
-		return .lightContent
-}
- ```
- | .default | .lightContent     |
- | :---------- | :---------- |
- |<img src="./Screenshot/step1-3.png" width="50%">|<img src="./Screenshot/step1-2.png" width="50%">|
-
-## Step2
-- 화면 상단에 파운데이션 네 칸, 카드뒷면을 표시하고 하단엔 카드 앞면 7장을 랜덤으로 표시한다.
-- Shake Gesture를 하면 카드가 다시 랜덤으로 표시된다.
-- 구현화면 : 2018.04.13
-<img src="./Screenshot/step2-1.gif" width="50%">
-
-## Step3
-- CardDeck 객체에서 랜덤으로 카드를 섞고, 출력 화면처럼 카드스택 형태로 보이도록 개선한다.
-  - 각 스택의 맨위의 카드만 앞카드로 뒤집는다.
-- 카드스택에 표시한 카드를 제외하고 남은 카드를 우측 상단에 뒤집힌 상태로 쌓아놓는다.
-- 맨위에 있는 카드를 터치하면 좌측에 카드 앞면을 표시하고, 다음 카드 뒷면을 표시한다.
-  - 만약 남은 카드가 없는 경우는 우측에도 빈 카드를 대신해서 반복할 수 있다는 이미지(refresh)를 표시한다.
-- 앱에서 Shake 이벤트를 발생하면 랜덤 카드를 다시 섞고 처음 상태로 다시 그리도록 구현한다.
-
-- 구현화면 : 2018.04.17
-<img src="./Screenshot/step3-2.gif" width="50%">
-
-## Step4
+## 학습내용
+### Custom View와 UIView의 생성자
+- [블로그에 정리한 링크](https://jinios.github.io/ios/2018/04/15/customView_init/)
 
 ### 사용자의 이벤트가 인식되는 구조
+> [Handling UIKit Gestures](https://jinios.github.io/ios/2018/07/05/handling_uikit_gestures/) 번역한 것 블로그에 정리
+
 1. 사용자는 디바이스에서 특정 액션을 취함 (터치, 줌 등)
 2. 그 액션에 해당하는 이벤트가 시스템에 의해 생성, UIKit에서 생성한 port를 통해 앱에 전달
 3. 이벤트들은 앱 내부적으로 queue에 저장(FIFO)
